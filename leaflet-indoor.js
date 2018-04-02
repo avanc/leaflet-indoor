@@ -259,7 +259,7 @@ L.Control.Level = L.Control.extend({
 
             (function(level) {
                 levelBtn.onclick = function() {
-                    self.setLevel(level);
+                    self.toggleLevel(level);
                 };
             })(level);
 
@@ -270,9 +270,11 @@ L.Control.Level = L.Control.extend({
     },
     _levelChange: function(e) {
         if (this._map !== null) {
-            if (typeof e.oldLevel !== "undefined")
+            if (typeof e.oldLevel !== "undefined" && e.oldLevel !==null)
                 this._buttons[e.oldLevel].style.backgroundColor = "#FFFFFF";
-            this._buttons[e.newLevel].style.backgroundColor = "#b0b0b0";
+            if (e.newLevel !== null) {
+              this._buttons[e.newLevel].style.backgroundColor = "#b0b0b0";
+            }
         }
     },
     setLevel: function(level) {
@@ -287,6 +289,13 @@ L.Control.Level = L.Control.extend({
             oldLevel: oldLevel,
             newLevel: level
         });
+    },
+    toggleLevel: function(level) {
+
+        if (level === this._level)
+            level=null;
+        
+        this.setLevel(level);
     },
     getLevel: function() {
         return this._level;
