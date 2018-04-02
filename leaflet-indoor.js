@@ -6,7 +6,7 @@
  *
  * getLevels can be called to get the array of levels that are present.
  */
-L.Indoor = L.Class.extend({
+L.Indoor = L.Layer.extend({
 
     options: {
         // by default the levels are expected to be in the level attribute in
@@ -198,7 +198,7 @@ L.indoor = function(data, options) {
 };
 
 L.Control.Level = L.Control.extend({
-    includes: L.Mixin.Events,
+    includes: L.Evented.prototype,
 
     options: {
         position: 'bottomright',
