@@ -205,7 +205,7 @@ L.Control.Level = L.Control.extend({
 
         // used to get a unique integer for each level to be used to order them
         parseLevel: function(level) {
-            return parseInt(level, 10);
+            return parseFloat(level, 10);
         }
     },
 
