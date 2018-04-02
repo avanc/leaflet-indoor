@@ -98,6 +98,7 @@ L.Indoor = L.Layer.extend({
         this._map = null;
     },
     addData: function(data) {
+      if (data!==null){
         var layers = this._layers,
             options = this.options,
             features = L.Util.isArray(data) ? data : data.features;
@@ -147,6 +148,7 @@ L.Indoor = L.Layer.extend({
                 layer.addData(part);
             }
         });
+      }
     },
     getLevels: function() {
         return Object.keys(this._layers);
@@ -176,6 +178,28 @@ L.Indoor = L.Layer.extend({
         }
 
         this._level = level;
+    },
+    addLayerToLevel: function(level, layer){
+      var dieses = this;
+      var layers = this._layers;
+      var options = this.options;
+      
+      // if the feature is on mutiple levels
+      if (L.Util.isArray(level)) {
+          level.forEach(function(level) {
+              dieses.addLayerToLevel(level, layer);
+          });
+      } else {
+        if (level in layers) {
+            layergroup = layers[level];
+        } else {
+            layergroup = layers[level] = L.geoJson({
+                type: "FeatureCollection",
+                features: []
+            }, options);
+        }
+        layergroup.addLayer(layer);
+      }
     },
     resetStyle: function (layer) {
       // reset any custom styles
